@@ -1,0 +1,301 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+   <meta charset="utf-8">
+   <link href = "JavascriptCSS.css" rel="stylesheet">
+    
+</head>
+
+ <body>
+     
+ 
+
+    
+     <select id="genres">
+  <option value="rock">Рок</option>
+  <option value="blues" selected>Блюз</option>
+</select>
+     <script>
+    
+let newOption = new Option("Классика", "classic",true,true);
+  genres.append(newOption);
+
+     </script>
+     <br>
+     <br>
+     <style>
+    td select,
+    td input{
+      width:150px;
+    }
+    #diagram td{
+      vertical-align:bottom;
+      text-align:center;
+      padding:10px;
+    }
+    #diagram div{
+      margin: 0 auto;
+
+    }
+     </style>
+    
+ Депозитный калькулятор.
+
+  <form name="calculator">
+    <table>
+      <tr>
+        <td>Первоначальный депозит</td>
+        <td>
+          <input name="money" type="number" value="10000" required>
+        </td>
+      </tr>
+      <tr>
+        <td>Срок вклада?</td>
+        <td>
+          <select name="months">
+            <option value="3">3 (минимум)</option>
+            <option value="6">6 (полгода)</option>
+            <option value="12" selected>12 (год)</option>
+            <option value="18">18 (1.5 года)</option>
+            <option value="24">24 (2 года)</option>
+            <option value="30">30 (2.5 года)</option>
+            <option value="36">36 (3 года)</option>
+            <option value="60">60 (5 лет)</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Годовая процентная ставка?</td>
+        <td>
+          <input name="interest" type="number" value="5" required>
+        </td>
+      </tr>
+    </table>
+
+
+  </form>
+
+
+  <table id="diagram">
+    <tr>
+      <th>Было:</th>
+      <th>Станет:</th>
+    </tr>
+    <tr>
+      <th id="money-before"></th>
+      <th id="money-after"></th>
+    </tr>
+    <td>
+      <div style="background: red;width:40px;height:100px"></div>
+    </td>
+    <td>
+      <div style="background: green;width:40px;height:0" id="height-after"></div>
+    </td>
+  </table>
+
+  <script>
+
+    let form = document.forms.calculator;
+
+    form.money.oninput = calculate;
+    form.months.onchange = calculate;
+    form.interest.oninput = calculate;
+
+    function calculate() {
+      let initial = +form.money.value;
+      if (!initial) return;
+
+      let interest = form.interest.value * 0.01;
+
+      if (!interest) return;
+
+      let years = form.months.value / 12;
+      if (!years) return;
+
+      let result = Math.round(initial * (1 + interest * years));
+
+      let height = result / form.money.value * 100 + 'px';
+      document.getElementById('height-after').style.height = height;
+      document.getElementById('money-before').innerHTML = form.money.value;
+      document.getElementById('money-after').innerHTML = result;
+    }
+
+    calculate();
+  </script>
+    
+     <script>        
+   let script = document.createElement('script');
+    < script src = "https://...."></script>
+     document.head.append(script);
+     script.onload = function(){
+     //в скрипте создается воспомагательная функция
+     alert();
+     }
+     
+     let script = document.createElement('script');
+         script.src = "https://.....js"
+         document.head.append(script);
+         
+        script.onerror = function(){
+            alert("Error loading" + this.src);
+        }
+         
+     
+     </script>
+     
+     <script>
+     function showName(firstName, lastName, ...titles) {
+  alert( firstName + ' ' + lastName ); // Юлий Цезарь
+
+  // Оставшиеся параметры пойдут в массив
+  // titles = ["Консул", "Император"]
+  alert( titles[0] ); // Консул
+  alert( titles[1] ); // Император
+  alert( titles.length ); // 2
+}
+     showName('Imperator','Roma','Cesar')
+     </script>
+     
+     <script>
+     let group = {
+  title: "Our Group",
+  students: ["John", "Pete", "Alice"],
+
+  showList() {
+    this.students.forEach((student)=>
+      // Error: Cannot read property 'title' of undefined
+      alert(this.title + ': ' + student)
+    });
+  }
+};
+
+group.showList();
+         
+     </script>
+     
+<script>
+     loadScript("/article/promise/one.js")
+       .then(function(script){
+         return loadScript("/article/promise-chaining/two.js");
+         })
+       .then(function(script){
+         return loadScript("....../three.js");
+     })
+        .then(script => loadScript("..."));
+         
+     
+    //Запрашиваем use.json
+    fetch('/article/promise-chaining/user.json')
+     //Загружаем данные в формате json
+       .then(response => response.json())
+      //Делаем запрос к Github
+         .then(user => fetch(`https://api.github.com/users${user.name}`))
+      //Загружаем ответ в формате json
+         .then(response => response.json())
+       //Показываем аватар 3 секунды
+         .then(githubUser =>{
+        let img = document.createElement('img');
+        img.className ="promise-avatar-example";
+        img.src = githubUser.avatar_url;
+        document.body.append('img');
+        
+        setTimeout(() => img.remove(),3000 );
+    });
+    
+    fetch('/article/promise-chaining/user.json')
+       .then(response => response.json())
+       .then(user => fetch(`https://api.github.com/users${user.name}`))
+       .then(response => response.json())
+       .then(githubUser => new Promise((resolve,reject) =>{
+        let img = document.createElement('img');
+             img.className = 'promise-avatar-example';
+             img.src = githubUser.avatar_url;
+            document.body.append('img');
+    setTimeout(() => {
+        img.remove();
+    resolve(githubUser);
+    },3000);
+    }))
+    .catch(error => alert(error.message));
+    
+    
+    async function LoadScript(src){
+         //запрашиваем json с данными пользователя
+        try{
+        
+        let response = await fetch(`https://api.github.com/users${user.name}`);
+        let user = await response.json();
+         //запрашиваем информацию об этом пользователе
+             let githubResponse = await fetch(`hhtps://api.github.com/users${user.name}`);
+             let githubUser = await githubResponse.json();
+        }catch(err){
+            ///////
+        }
+        
+        //отображаем аватар пользователя
+        let img = document.createElement('img');
+        img.src = githubUser.avatar_url;
+        img.className = "promise-avatar";
+        document.body.append(img);
+        
+        await new Promise((resolve,reject) => setTimeout(resolve,3000));
+        
+        img.remove();
+        
+        return githubUser;
+    }
+    showAvatar();
+    }
+    //запрашиваем user.json
+    fetch('/article/promise-chaining/user.json')
+     //загружаем данные в формате json
+     
+    
+
+    
+    
+     </script>
+     
+     <script> 
+         export let month = ['jan','Feb'];
+         export class User {
+             constructor(name){
+                 this.name = name;
+             }
+         }
+         
+         //say.js
+        function sayHi(user){
+            alert(`Hello,${user}!`);
+        }
+        
+        function sayBye(user){
+            alert(`Bye,${user}`);
+        }
+        export{sayHi,sayBye};
+         
+         
+     import{sayHi,sayBye} from './say.js';
+         sayHi('John');//Hello John
+         
+         
+         //main.js
+      import{
+              sayHi as hi,sayBye as  bye } from './say.js';
+         
+         hi('John');//Hello,John!
+         bye('John');//Bye,John!
+      
+         
+         //say.js
+     export{sayHi as hi,sayBye as bye};
+         
+         
+     
+     </script>
+     
+     
+         
+
+</body>
+</html>
