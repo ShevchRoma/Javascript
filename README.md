@@ -1,2 +1,2 @@
 # Javascript
-my sites()
+my sites(js,react)
