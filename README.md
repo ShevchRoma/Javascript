@@ -1,2 +1,2 @@
 # Javascript
-my sites(js,react,css,typescript)
+my sites(js,react,css,typescript,redux)
