@@ -1,2 +1,2 @@
 # Javascript
-my sites(js,react,css,typescript,redux)
+my sites(js,react,css,typescript,redux{redux-thunk})
